@@ -89,8 +89,8 @@ const routes = [
   { path: "/session/ResetPassword", element: <ResetPassword /> },
   { path: "/session/PasswordSuccess", element: <PasswordSuccess /> },
 
-  //{ path: "/", element: <Navigate to="/dashboard/client"/> },
-  { path: "/", element: <Navigate to="session/signin" /> },
+  { path: "/", element: <Navigate to="/dashboard/client"/> },
+  //{ path: "/", element: <Navigate to="session/signin" /> },
   { path: "*", element: <NotFound /> }
 ];
 
