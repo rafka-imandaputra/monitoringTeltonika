@@ -20,7 +20,7 @@ dotenv.config();
 
 // Membuat instance Express
 const app = express();
-const port = process.env.PORT || 6000;
+const port = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors()); // Mengizinkan semua permintaan cross-origin
