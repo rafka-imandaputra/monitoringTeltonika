@@ -83,7 +83,7 @@ export default function JwtLogin() {
     setLoading(true);
     try {
         // Menggunakan URL API backend dari Vercel
-        const response = await axios.post('http://localhost:5000/auth/login', {
+        const response = await axios.post('https://monitoring-teltonika-be.vercel.app/auth/login', {
             email: values.email,
             password: values.password,
         });
