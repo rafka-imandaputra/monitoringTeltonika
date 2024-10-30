@@ -385,6 +385,10 @@ pool.connect((err) => {
   }
 });
 
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
+
 //app.listen(port, () => {
 //  console.log(`Server is running on port ${port}`);
 //  console.log("DB_USER:", process.env.DB_USER);
