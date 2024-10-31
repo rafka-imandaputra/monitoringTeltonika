@@ -107,11 +107,39 @@ app.get("/commodity", async (req, res) => {
 
 // Route untuk mendapatkan detail alat berdasarkan IMEI
 app.get("/commodity/:id_commodity", async (req, res) => {
-  const { imei } = req.params;
+  const { id_commodity } = req.params;
   try {
     const result = await pool.query(
       "SELECT id_konfigurasi, id_commodity, namabarang, descbarang, satuan, stokbarang, gambarbarang FROM public.commodity WHERE id_commodity = $1",
       [imei]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).send("Alat tidak ditemukan");
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+});
+
+// Route untuk mengupdate alat berdasarkan IMEI
+app.put("/commodity/:id_commodity", async (req, res) => {
+  const { id_commodity } = req.params;
+  const { namabarang, descbarang, satuan, gambarbarang, stokbarang } = req.body;
+
+  // Jika gambar disimpan secara lokal, ubah nama gambar menjadi path yang benar
+  // Contoh: 'nama_gambar.jpg' menjadi '/public/images/nama_gambar.jpg'
+  // Jika gambar disimpan secara eksternal, pastikan URL sudah benar
+  let gambarURL = gambarbarang;
+  if (!gambar.startsWith("http")) {
+    gambarURL = `${req.protocol}://${req.get("host")}/public/images/${gambarbarang}`;
+  }
+
+  try {
+    const result = await pool.query(
+      "UPDATE public.alat SET namabarang = $1, descbarang = $2, satuan = $3, gambarbarang = $4, stokbarang = $5 WHERE id_commodity = $6 RETURNING id_commodity, id_konfigurasi, namabarang, descbarang, satuan, gambarbarang, stokbarang",
+      [namabarang, descbarang, satuan, gambarURL, stokbarang, id_commodity]
     );
     if (result.rows.length === 0) {
       return res.status(404).send("Alat tidak ditemukan");
@@ -373,6 +401,69 @@ app.get("/api/dashboardPinpoints", async (req, res) => {
     res.status(500).send("Error fetching pinpoint data");
   }
 });
+
+//route untuk melakukan insert terhadap database dari data teltonika
+app.post("/api/teltonikaDB", async(req, res) => {
+  const imei = req.body.imei;
+  const jsonCodec = req.body.codec_data;
+  const codecData = JSON.parse(jsonCodec);
+  const io = req.body.io_data;
+  const ioDataObject = parseIOData(io);
+  
+  const finalTemperature = parseFloat(ioDataObject['Dallas Temperature 1'].replace("°C", ""))
+  //  console.log(codecData.data[0].lat)
+  // console.log(codecData.data[0].lng, codecData.data[0].lat, finalTemperature, ioDataObject['Digital Input 2'], imei);
+  // console.log(ioDataObject);
+  // console.log();
+  // console.log( codecData);
+  console.log(
+      [codecData.data[0].lng, codecData.data[0].lat, finalTemperature, ioDataObject['Digital Input 2'], imei]
+    )
+
+  try{
+    const result = await pool.query(`
+      UPDATE alat SET
+        latitude = $1,
+        longitude = $2,
+        suhu = $3,
+        digitalinput = $4
+        where imei = $5
+      RETURNING
+        latitude,
+        longitude,
+        suhu,
+        digitalinput;
+        `,
+      [codecData.data[0].lng,
+       codecData.data[0].lat,
+       finalTemperature,
+       ioDataObject['Digital Input 2'],
+       imei]
+    )
+    res.status(201).json(result.rows[0]);
+
+  } catch(error){
+    console.error("teltonika fail");
+    res.status(500).send("teltonika DB fail");
+  }
+})
+
+function parseIOData(ioData) {
+  const ioDataObject = {};
+  
+  // Split the io_data string by commas to get each key-value pair
+  const keyValuePairs = ioData.split(',');
+
+  // Iterate over each key-value pair
+  keyValuePairs.forEach(pair => {
+      // Split by the first colon only to get key and value
+      const [key, ...value] = pair.split(':');
+      // Trim and store in the object
+      ioDataObject[key.trim()] = value.join(':').trim();
+  });
+
+  return ioDataObject;
+}
 
 // =============================
 // Menjalankan Server

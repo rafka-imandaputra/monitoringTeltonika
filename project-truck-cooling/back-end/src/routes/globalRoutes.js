@@ -1,6 +1,6 @@
 import express from 'express';
 import {getKelolaAlat, getKelolaAlatid} from '../controllers/kelolaalatController.js';
-import { getKelolaKomoditas } from '../controllers/KelolaKomoditasController.js';
+import { getKelolaKomoditas, updateKomoditas } from '../controllers/KelolaKomoditasController.js';
 import { konfigurasiAlat, konfigurasiAlatid, postColdStorage, postPerjalanan, updateKonfigurasi } from '../controllers/konfigurasiController.js';
 
 const router = express.Router();
@@ -22,5 +22,6 @@ router.post('/coldstorage/:id_sewa', postColdStorage);
 
 //KELOLA KOMODITAS
 router.get('/kelolakomoditas', getKelolaKomoditas);
+router.put('/kelolakomoditas/:id_commodity', updateKomoditas);
 
 export default router;
