@@ -1,0 +1,83 @@
+.layanan {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 80px;
+    width: 100%;
+    background-color: #00A3D9;
+}
+
+.layanan h1 {
+    font-size: 2.5rem;
+    color: white;
+    margin-bottom: 10px;
+  }
+  
+.layanan p {
+    font-size: 1.2rem;
+    color: black;
+    margin-bottom: 30px;
+    max-width: 800px; /* Membatasi lebar maksimal teks */
+    line-height: 1.6;
+  }
+
+.layanancard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px; 
+    justify-items: center; 
+    width: 100%; 
+}
+
+.layanan-item {
+    background-color: white;
+    border-radius: 7px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    text-align: left;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column; 
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.item-heading {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.item-icon {
+    font-size: 6rem; 
+    color: black;
+    margin-left: 10px; 
+}
+
+.learn-more {
+    color: black;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.learn-more:hover {
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 1024px) {
+    .layanancard {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .layanancard {
+        grid-template-columns: 1fr; 
+    }
+}

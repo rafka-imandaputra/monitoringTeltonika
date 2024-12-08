@@ -1,0 +1,17 @@
+node_modules
+node_modules
+node_modules
+node_modules
+node_modules
+node_modules
+node_modules
+node_modules
+node_modules
+node_modules
+node_modules
+node_modules
+
+.idea
+tests/__pycache__
+
+.vscode

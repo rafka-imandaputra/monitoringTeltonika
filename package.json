@@ -1,0 +1,25 @@
+{
+  "name": "monitoringteltonika",
+  "version": "1.0.0",
+  "description": "Program Untuk Melakukan Monitoring Terhadap Perangkat Teltonika Untuk Implementasi Pada Model Bisnis Tracking Cooling Truck dan Cold Storage",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tanstack/react-query": "^5.59.15",
+    "body-parser": "^1.20.3",
+    "express": "^4.21.0",
+    "monitoringteltonika": "file:",
+    "pg": "^8.13.0",
+    "react-scripts": "^5.0.1",
+    "sql": "^0.78.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+  }
+}

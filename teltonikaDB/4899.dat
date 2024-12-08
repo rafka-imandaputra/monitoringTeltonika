@@ -1,0 +1,8 @@
+1	1	Client1	clientpass123	081234567890	client1@example.com	Jl. Mawar	Kecamatan A	Kabupaten B	Provinsi C
+2	1	Client2	clientpass456	082345678901	client2@example.com	Jl. Melati	Kecamatan X	Kabupaten Y	Provinsi Z
+3	2	Client3	clientpass789	083456789012	client3@example.com	Jl. Kenanga	Kecamatan M	Kabupaten N	Provinsi O
+4	2	Client4	clientpass321	084567890123	client4@example.com	Jl. Tulip	Kecamatan P	Kabupaten Q	Provinsi R
+5	3	Client5	clientpass654	085678901234	client5@example.com	Jl. Anggrek	Kecamatan S	Kabupaten T	Provinsi U
+\.
+
+

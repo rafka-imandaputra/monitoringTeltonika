@@ -1,0 +1,34 @@
+services:
+  web:
+    build:
+      context: ./front-end
+    container_name: teltonikaFrontend
+    ports:
+      - "3000:3000"
+
+  backend:
+    build:
+      context: ./back-end
+    container_name: teltonikaBackend
+    environment:
+      DATABASE_URL: postgres://myappuser:mypassword@db:5432/myappdb
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:14
+    container_name: DBTeltonika
+    environment:
+      POSTGRES_USER: teltonikaUse
+      POSTGRES_PASSWORD: teltonikaGass
+      POSTGRES_DB: Teltonika
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./teltonikaDB/teltonikaDB.sql:/docker-entrypoint-initdb.d/teltonikaDB.sql # Optional DB dump
+    ports:
+      - "5432:5432"
+
+volumes:
+  db_data:
